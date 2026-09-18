@@ -1,42 +1,17 @@
 <title>지면 프리뷰 메이커</title>
 <style>
+  /* 시연님 요청으로 사이트 전체를 항상 검은 톤으로 고정 (시스템 설정과 무관하게 다크 고정) */
   :root{
-    --bg:#faf8f4;
-    --surface:#ffffff;
-    --surface-2:#f2ede4;
-    --border:#e5ddce;
-    --text:#211c15;
-    --text-muted:#756a58;
-    --accent:#ff5a1f;
-    --accent-ink:#ffffff;
-    --accent-wash:#fff0e8;
-    --shadow: 0 1px 2px rgba(33,28,21,0.06), 0 8px 24px rgba(33,28,21,0.06);
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#15130f;
-      --surface:#1e1a14;
-      --surface-2:#262019;
-      --border:#3a3226;
-      --text:#f3ece0;
-      --text-muted:#a89a84;
-      --accent:#ff7a45;
-      --accent-ink:#1a1108;
-      --accent-wash:#3a2417;
-      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#15130f;
-    --surface:#1e1a14;
-    --surface-2:#262019;
+    --bg:#0e0d0b;
+    --surface:#17140f;
+    --surface-2:#201b14;
     --border:#3a3226;
     --text:#f3ece0;
     --text-muted:#a89a84;
     --accent:#ff7a45;
     --accent-ink:#1a1108;
     --accent-wash:#3a2417;
-    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.45);
   }
 
   *{box-sizing:border-box;}
