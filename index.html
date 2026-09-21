@@ -818,18 +818,31 @@
     refreshQueueUI();
   }
 
-  // ---- 다운로드 (downloads 캐패빌리티 경유) ----
+  // ---- 다운로드 ----
+  // Claude 아티팩트 안에서 열렸을 때는 downloads 캐패빌리티를 쓰고,
+  // GitHub Pages 등 일반 브라우저에서 열렸을 때는 표준 <a download> 방식으로 저장한다.
   async function offerSave(filename, blobOrString){
     const status = document.getElementById("status");
     try {
-      const downloads = window.claude ? await window.claude.use("downloads") : null;
-      if (!downloads){
-        status.textContent = "이 화면에서는 파일 저장을 지원하지 않아요.";
-        status.className = "status err";
-        return;
+      if (window.claude && typeof window.claude.use === "function"){
+        const downloads = await window.claude.use("downloads");
+        if (downloads){
+          const res = await downloads.save({ filename, data: blobOrString });
+          status.textContent = res.status === "saved" ? `${filename} 저장했어요.` : "전달했어요.";
+          status.className = "status ok";
+          return;
+        }
       }
-      const res = await downloads.save({ filename, data: blobOrString });
-      status.textContent = res.status === "saved" ? `${filename} 저장했어요.` : "전달했어요.";
+      const blob = (blobOrString instanceof Blob) ? blobOrString : new Blob([blobOrString]);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      status.textContent = `${filename} 다운로드했어요.`;
       status.className = "status ok";
     } catch (err) {
       if (err && err.code === "declined") return;
